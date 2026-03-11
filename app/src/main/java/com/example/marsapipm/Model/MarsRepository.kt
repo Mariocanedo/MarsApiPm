@@ -27,11 +27,10 @@ class MarsRepository(private  val marsDao: MarsDao) {
 
             when (response.code()){
 
-                in 200 ..299 -> response?.body().let {
+                in 200 ..299 -> response.body()?.let { lista ->
 
-                    if(it != null){
-                        marsDao.insertAllTerrains(it)
-                    }
+                    marsDao.insertAllTerrains(lista)
+                    dataFromInternet.postValue(lista)
                 }
 
                 in 300..301 -> Log.d("REPO","${response.code()} --- ${response.errorBody()}")
@@ -40,32 +39,34 @@ class MarsRepository(private  val marsDao: MarsDao) {
 
         }catch (t: Throwable){
 
-            Log.e("REPO", "${t.message}")
+            Log.e("REPO", "Error ${t.message}")
         }
 
     }
 
 
 
-    fun getMarsById(id: Int) : LiveData<MarsRealState>{
+    fun getMarsById(id: String) : LiveData<MarsRealState>{
 
-
-        return  getMarsById(id)
+        return  marsDao.getTerrainById(id)
     }
 
 
     val listAllTask : LiveData<List<MarsRealState>> = marsDao.getAllTerrains()
 
-
-    suspend fun insertTerrains (terrain : MarsRealState){
+ // insert terreno
+    suspend fun insertTerrain (terrain : MarsRealState){
         marsDao.inserTerrain(terrain)
     }
 
+    // actualizar terrenos
     suspend fun updateTerrains( terrain: MarsRealState){
 
         marsDao.updateTerrains(terrain)
     }
 
+
+    // eliminar terrenos
     suspend fun deletAll(){
         marsDao.deletAll()
     }
