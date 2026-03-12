@@ -89,7 +89,7 @@ class MarsViewModel (application: Application): AndroidViewModel(application) {
 
     // actualizar
 
-    fun updateTerrain( terrain: MarsRealState) = viewModelScope.launch {
+      fun updateTerrain( terrain: MarsRealState) = viewModelScope.launch {
         repository.updateTerrains(terrain)
     }
     // obtener un elemento por id
