@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.marsapipm.Model.Local.MarsDao
 import com.example.marsapipm.Model.Remote.MarsRealState
-import com.example.marsapipm.Model.Remote.RetrofitClient
+
 
 class MarsRepository(private  val marsDao: MarsDao) {
 
